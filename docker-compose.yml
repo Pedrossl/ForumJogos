@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: api_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: trab_final
+      MYSQL_USER: lobatoSQL
+      MYSQL_PASSWORD: 1234
+    ports:
+      - 3303:3306
+    expose:
+      - '3306'

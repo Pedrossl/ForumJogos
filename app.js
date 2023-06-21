@@ -5,9 +5,11 @@ import routes from './routes.js'
 import { sequelize } from './databases/conecta.js'
 import { Nivel } from './models/Nivel.js'
 import { Usuario } from './models/Usuario.js'
+import { Jogos } from './models/Jogos.js'
+import { Nota } from './models/Notas.js'
 
 const app = express()
-const port = 3000
+const port = 3001
 
 app.use(express.json())
 app.use(cors())
@@ -18,10 +20,10 @@ async function conecta_db() {
     await sequelize.authenticate();
     console.log('Conexão com banco de dados realizada com sucesso');
 
-    await Nivel.sync();
-    await Usuario.sync();
-
-
+    await Nivel.sync({alter: true});
+    await Usuario.sync({alter: true});
+    await Jogos.sync({alter: true});
+    await Nota.sync({alter: true});
   } catch (error) {
     console.error('Erro na conexão com o banco: ', error);
   }

@@ -10,23 +10,17 @@ export const Jogos = sequelize.define('jogos', {
     },
     nome: {
         type: DataTypes.STRING(40),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     genero: {
         type: DataTypes.STRING(40),
         allowNull: false
     },
-    nota: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        validate: {
-            min: 0,
-            min: 5
-            
-        }
-      },
+
     numeroVotos: {
           type: DataTypes.INTEGER(1),
+          defaultValue: 0
     },
     preco: {
         type: DataTypes.DECIMAL(9,2),
@@ -34,21 +28,26 @@ export const Jogos = sequelize.define('jogos', {
     },
     notaTotal: {
         type: DataTypes.DECIMAL(9,2),
-        allowNull: true
+        defaultValue: 0
 
         },
-    avaliacao: {
+    avaFinal: {
         type: DataTypes.STRING(40),
-        allowNull: false,
+        defaultValue: "Sem avaliação Suficientes"
     },
 
 })
 
-/*Jogos.beforeUpdate(jogos => {
-    if(this.numeroVotos >= 5){
-        if(this.notaTotal < 2){
-            this.avaliacao = "Ruim"}
-        else if(this.notaTotal <= 2 &&){
+Jogos.beforeUpdate(jogo => {
+    if (jogo.numeroVotos >= 5) {
+      if (jogo.notaTotal < 2) {
+        jogo.avaFinal = "Ruim";
+      } else if (jogo.notaTotal <= 2 && jogo.notaTotal > 4) {
+        jogo.avaFinal = "Regular";
+      } else if (jogo.notaTotal <= 4 && jogo.notaTotal > 5) {
+        jogo.avaFinal = "Bom";
+      } else if (jogo.notaTotal <= 5) {
+        jogo.avaFinal = "Ótimo";
+      }
     }
-
-  }})*/
+  });

@@ -11,6 +11,15 @@ services:
       MYSQL_USER: lobatoSQL
       MYSQL_PASSWORD: 1234
     ports:
-      - 3303:3306
+      - 3307:3306
     expose:
       - '3306'
+
+  api:
+    build: /home/Reidecio  
+    restart: always
+    container_name: api_app
+    ports:
+      - 3000:3000 
+    depends_on:
+      - db 

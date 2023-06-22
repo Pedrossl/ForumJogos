@@ -2,6 +2,7 @@ import { Router } from "express"
 import { jogoCreate, jogoIndex } from "./controllers/jogoController.js"
 import { notasCreate, notasIndex } from "./controllers/notasController.js"
 import { usuarioCreate, usuarioIndex } from "./controllers/usuarioController.js"
+import { loginUsuario } from "./controllers/loginController.js"
 
 
 
@@ -18,6 +19,8 @@ router.get('/notas', notasIndex)
 // Usuarios
 router.get('/usuarios', usuarioIndex)
       .post('/usuarios', usuarioCreate)
+
+router.get('/login', loginUsuario)
 
 
 export default router

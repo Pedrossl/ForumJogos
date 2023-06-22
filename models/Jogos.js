@@ -24,7 +24,8 @@ export const Jogos = sequelize.define('jogos', {
     },
     preco: {
         type: DataTypes.DECIMAL(9,2),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0,
     },
     notaTotal: {
         type: DataTypes.DECIMAL(9,2),
@@ -43,12 +44,8 @@ export const Jogos = sequelize.define('jogos', {
 Jogos.belongsTo(Usuario, { foreignKey: 'usuario_id' })
 Usuario.hasMany(Jogos, { foreignKey: 'usuario_id' })
 
+
 Jogos.beforeBulkUpdate(jogo => {
-
- })
-
-
-Jogos.beforeUpdate(jogo => {
     if (jogo.numeroVotos >= 5) {
       if (jogo.notaTotal < 2) {
         jogo.avaFinal = "Ruim";

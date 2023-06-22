@@ -13,6 +13,7 @@ export const Nota = sequelize.define('nota', {
   nota: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0
   }
 });
 

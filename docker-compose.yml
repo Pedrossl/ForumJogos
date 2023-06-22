@@ -4,16 +4,17 @@ services:
   db:
     image: mysql:latest
     restart: always
-    container_name: api_db
     environment:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_DATABASE: trab_final
       MYSQL_USER: lobatoSQL
       MYSQL_PASSWORD: 1234
     ports:
-      - 3307:3306
+      - 3304:3306
     expose:
       - '3306'
+    networks:
+      - reidecio_rede
 
   api:
     build: /home/Reidecio  
@@ -23,3 +24,10 @@ services:
       - 3000:3000 
     depends_on:
       - db 
+    networks:
+      - reidecio_rede
+    env_file:
+      - .env
+
+networks:
+  reidecio_rede:

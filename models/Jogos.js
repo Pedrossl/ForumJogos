@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 
 import { sequelize } from '../databases/conecta.js';
+import { Usuario } from './Usuario.js';
 
 export const Jogos = sequelize.define('jogos', {
     id: {
@@ -11,7 +12,6 @@ export const Jogos = sequelize.define('jogos', {
     nome: {
         type: DataTypes.STRING(40),
         allowNull: false,
-        unique: true
     },
     genero: {
         type: DataTypes.STRING(40),
@@ -28,7 +28,8 @@ export const Jogos = sequelize.define('jogos', {
     },
     notaTotal: {
         type: DataTypes.DECIMAL(9,2),
-        defaultValue: 0
+        defaultValue: 0,
+      
 
         },
     avaFinal: {
@@ -37,6 +38,15 @@ export const Jogos = sequelize.define('jogos', {
     },
 
 })
+
+
+Jogos.belongsTo(Usuario, { foreignKey: 'usuario_id' })
+Usuario.hasMany(Jogos, { foreignKey: 'usuario_id' })
+
+Jogos.beforeBulkUpdate(jogo => {
+
+ })
+
 
 Jogos.beforeUpdate(jogo => {
     if (jogo.numeroVotos >= 5) {

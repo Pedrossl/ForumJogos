@@ -9,7 +9,7 @@ import { Jogos } from './models/Jogos.js'
 import { Nota } from './models/Notas.js'
 
 const app = express()
-const port = 3001
+const port = 3002
 
 app.use(express.json())
 app.use(cors())
@@ -20,10 +20,10 @@ async function conecta_db() {
     await sequelize.authenticate();
     console.log('Conexão com banco de dados realizada com sucesso');
 
-    await Nivel.sync({alter: true});
-    await Usuario.sync({alter: true});
-    await Jogos.sync({alter: true});
-    await Nota.sync({alter: true});
+    await Nivel.sync({ alter: true});
+    await Usuario.sync( { alter: true });
+    await Jogos.sync( { alter: true });
+    await Nota.sync(  { force: true });
   } catch (error) {
     console.error('Erro na conexão com o banco: ', error);
   }

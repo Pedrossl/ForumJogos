@@ -19,10 +19,16 @@ export const Nota = sequelize.define('nota', {
 
 Nota.belongsTo(Jogos, {
   foreignKey: 'jogo_id',
-  allowNull: false
-});
+  allowNull: false,
+}
+ );
 
-Jogos.hasMany(Nota, { foreignKey: 'jogo_id'});
+Jogos.hasMany(Nota, { foreignKey: 'jogo_id'},
+{
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+  
+});
 
 Nota.belongsTo(Usuario, {
   foreignKey: 'usuario_id',

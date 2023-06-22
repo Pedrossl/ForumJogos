@@ -1,4 +1,4 @@
-import { jwt } from "jsonwebtoken";
+import jwt from 'jsonwebtoken'
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -8,7 +8,6 @@ export const verificaLogin = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decode = jwt.verify(token, process.env.JWT_KEY);
         console.log(decode);
-        req.usuario = decode;
         next();
 
      } catch(erro){

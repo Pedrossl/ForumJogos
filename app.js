@@ -20,10 +20,10 @@ async function conecta_db() {
     await sequelize.authenticate();
     console.log('Conexão com banco de dados realizada com sucesso');
 
-    await Nivel.sync({ alter: true});
-    await Usuario.sync( { alter: true });
-    await Jogos.sync( { alter: true });
-    await Nota.sync(  { alter: true });
+    await Nivel.sync();
+    await Usuario.sync();
+    await Jogos.sync();
+    await Nota.sync();
   } catch (error) {
     console.error('Erro na conexão com o banco: ', error);
   }

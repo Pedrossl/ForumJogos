@@ -42,9 +42,27 @@ export const notasCreate = async (req, res) => {
     
     
     }
-
-    
-
-
-
 }
+
+export const notasDelete = async (req, res) => {
+    const id = req.params.id;
+   
+    const t = await sequelize.transaction();
+
+    try { 
+        const notacao = await Nota.findByPk(id);
+
+        await Jogos.decrement('notaTotal', { by: notacao.nota, where: { id: notacao.jogo_id }, transaction: t });  
+        
+        await Jogos.decrement('numeroVotos', { by: 1, where: { id: notacao.jogo_id }, transaction: t });
+
+        await Nota.destroy({ where: { id: id }, transaction: t });
+
+        await t.commit();
+
+        res.status(200).json(notacao);
+     } catch (error) {
+        await t.rollback();
+        res.status(400).json({ id: 0, msg: "Erro... Não foi possível deletar a nota" })
+      }
+ }

@@ -33,6 +33,9 @@ export const Usuario = sequelize.define('usuario', {
     allowNull: false
   }
 },
+{
+  paranoid: true
+},
   {
     timestamps: false
 });

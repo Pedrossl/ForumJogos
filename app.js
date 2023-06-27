@@ -22,8 +22,8 @@ async function conecta_db() {
 
     await Nivel.sync();
     await Usuario.sync();
-    await Jogos.sync({alter: true});
-    await Nota.sync({alter: true});
+    await Jogos.sync();
+    await Nota.sync();
   } catch (error) {
     console.error('Erro na conexão com o banco: ', error);
   }

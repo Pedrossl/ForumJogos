@@ -1,14 +1,14 @@
 import { sequelize } from '../databases/conecta.js'
 import { Jogos } from '../models/Jogos.js';
 import { Nota } from '../models/Notas.js';
+import { Usuario } from '../models/Usuario.js';
 
 
 export const notasIndex = async (req, res) => {
 
     try {
       const nota = await Nota.findAll({
-        include: Jogos,
-        include: Usuario
+        include: [ { model: Jogos,attributes: ['nome']}, {model: Usuario, attributes: ['nome']} ]
       });
       res.status(200).json(nota)
     } catch (error) {
@@ -19,7 +19,7 @@ export const notasIndex = async (req, res) => {
 export const notasCreate = async (req, res) => {
 
     const { nota, jogo_id} = req.body;
-    const usuario_id = req.user.id;
+    const usuario_id = req.user_logado_id ;
     
     if (!nota || !jogo_id || !usuario_id) {
         res.status(400).json({ id: 0, msg: "Erro... Informe os dados" })
@@ -31,7 +31,7 @@ export const notasCreate = async (req, res) => {
     try { 
         const notacao = await Nota.create({ nota, jogo_id, usuario_id }, { transaction: t });
 
-        await Jogos.increment('notaTotal', { by: notacao.nota, where: { id: jogo_id }, transaction: t });  
+        await Jogos.increment('notaTotal', { by: notacao.nota, where: { id: jogo_id }, transaction: t});  
         
         await Jogos.increment('numeroVotos', { by: 1, where: { id: jogo_id }, transaction: t });
 

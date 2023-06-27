@@ -61,3 +61,26 @@ export const jogoCreate = async (req, res) => {
     res.status(400).json({ id: 0, msg: "Erro... Você não tem permissão para deletar jogos" })
   }
  }
+
+ export const jogoUpdate = async (req, res) => { 
+    const id = req.params.id;
+    const { nome, genero, preco } = req.body;
+
+
+    if (!id || !nome || !genero || !preco ) {
+        res.status(400).json({ id: 0, msg: "Erro... Informe os dados" })
+        return
+    }
+
+    try {
+        const jogo = await Jogos.update({ nome, genero, preco }, {
+            where: {
+                id: id
+            },
+            individualHooks: true
+        });
+        res.status(200).json(jogo);
+    } catch (error) {
+        res.status(400).json({ id: 0, msg: "Erro... Não foi possível atualizar o jogo" })
+    }
+ }    

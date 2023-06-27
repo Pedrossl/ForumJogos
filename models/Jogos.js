@@ -58,17 +58,10 @@ export const Jogos = sequelize.define('jogos', {
     }
   });*/
 
-  Jogos.addHook('afterUpdate', (jogo) => { 
-    if (jogo.numeroVotos >= 5) {
-      if (jogo.notaTotal < 2) {
-        jogo.avaFinal = "Ruim";
-      } else if (jogo.notaTotal <= 2 && jogo.notaTotal > 4) {
-        jogo.avaFinal = "Regular";
-      } else if (jogo.notaTotal <= 4 && jogo.notaTotal > 5) {
-        jogo.avaFinal = "Bom";
-      } else if (jogo.notaTotal <= 5) {
-        jogo.avaFinal = "Ótimo";
-      }
-    }
+ 
 
-  });
+
+  //Jogos.beforeUpdate(jogo => { 
+    //console.log(jogo)
+    //jogo.avaFinal = "Ruim";
+  //});

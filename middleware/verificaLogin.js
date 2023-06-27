@@ -8,6 +8,9 @@ export const verificaLogin = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decode = jwt.verify(token, process.env.JWT_KEY);
         console.log(decode);
+        req.user_logado_id = decode.id
+        req.user_logado_nome = decode.nome
+        req.user_logado_nivel = decode.nivel
         next();
 
      } catch(erro){

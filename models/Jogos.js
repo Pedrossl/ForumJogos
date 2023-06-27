@@ -12,6 +12,7 @@ export const Jogos = sequelize.define('jogos', {
   nome: {
       type: DataTypes.STRING(40),
       allowNull: false,
+      unique: true
   },
   genero: {
       type: DataTypes.STRING(40),
@@ -33,8 +34,9 @@ export const Jogos = sequelize.define('jogos', {
   avaFinal: {
       type: DataTypes.STRING(40),
       defaultValue: "Sem avaliação suficiente"
-  }
-});
+  },
+},
+);
 
 
 
@@ -42,7 +44,7 @@ export const Jogos = sequelize.define('jogos', {
 //Usuario.hasMany(Jogos, { foreignKey: 'usuario_id' })
 
 
-Jogos.beforeUpdate(jogo => {
+/*Jogos.afterUpdate(jogo => {
     if (jogo.numeroVotos >= 5) {
       if (jogo.notaTotal < 2) {
         jogo.avaFinal = "Ruim";
@@ -54,4 +56,19 @@ Jogos.beforeUpdate(jogo => {
         jogo.avaFinal = "Ótimo";
       }
     }
+  });*/
+
+  Jogos.addHook('afterUpdate', (jogo) => { 
+    if (jogo.numeroVotos >= 5) {
+      if (jogo.notaTotal < 2) {
+        jogo.avaFinal = "Ruim";
+      } else if (jogo.notaTotal <= 2 && jogo.notaTotal > 4) {
+        jogo.avaFinal = "Regular";
+      } else if (jogo.notaTotal <= 4 && jogo.notaTotal > 5) {
+        jogo.avaFinal = "Bom";
+      } else if (jogo.notaTotal <= 5) {
+        jogo.avaFinal = "Ótimo";
+      }
+    }
+
   });

@@ -7,7 +7,8 @@ export const notasIndex = async (req, res) => {
 
     try {
       const nota = await Nota.findAll({
-        include: Jogos
+        include: Jogos,
+        include: Usuario
       });
       res.status(200).json(nota)
     } catch (error) {
@@ -17,7 +18,8 @@ export const notasIndex = async (req, res) => {
 
 export const notasCreate = async (req, res) => {
 
-    const { nota, jogo_id, usuario_id } = req.body;
+    const { nota, jogo_id} = req.body;
+    const usuario_id = req.user.id;
     
     if (!nota || !jogo_id || !usuario_id) {
         res.status(400).json({ id: 0, msg: "Erro... Informe os dados" })
@@ -47,6 +49,8 @@ export const notasCreate = async (req, res) => {
 export const notasDelete = async (req, res) => {
     const id = req.params.id;
    
+  if(req.user_logado_nivel > 3 || req.user_logado_id == id){
+
     const t = await sequelize.transaction();
 
     try { 
@@ -65,4 +69,7 @@ export const notasDelete = async (req, res) => {
         await t.rollback();
         res.status(400).json({ id: 0, msg: "Erro... Não foi possível deletar a nota" })
       }
+ } else {
+    res.status(400).json({ id: 0, msg: "Erro... Você não tem permissão para deletar essa nota" })
  }
+}

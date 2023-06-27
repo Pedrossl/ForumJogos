@@ -13,7 +13,7 @@ export const loginUsuario = async (req, res) => {
     if (!usuario || !bcrypt.compareSync(senha, usuario.senha)) {
         return res.status(401).json({ error: 'Dados Incorretos' });
     } else {
-        const token = jwt.sign({ id: usuario.id , nome: usuario.nome}, process.env.JWT_KEY, {
+        const token = jwt.sign({ id: usuario.id , nome: usuario.nome, nivel: usuario.nivel}, process.env.JWT_KEY, {
         expiresIn: "1h"
         });
         

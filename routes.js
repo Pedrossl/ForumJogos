@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { jogoCreate, jogoIndex } from "./controllers/jogoController.js"
 import { notasCreate, notasDelete, notasIndex } from "./controllers/notasController.js"
-import { usuarioCreate, usuarioIndex } from "./controllers/usuarioController.js"
+import { usuarioCreate, usuarioDelete, usuarioIndex } from "./controllers/usuarioController.js"
 import { loginUsuario } from "./controllers/loginController.js"
 import { verificaLogin } from "./middleware/verificaLogin.js"
 
@@ -15,12 +15,13 @@ router.get('/jogos', jogoIndex)
 
 // Notas
 router.get('/notas', notasIndex)
-      .post('/notas',verificaLogin,notasCreate)
+      .put('/notas',verificaLogin,notasCreate)
       .delete('/notas/:id',notasDelete)
 
 // Usuarios
-router.get('/usuarios',verificaLogin,usuarioIndex)
+router.get('/usuarios',usuarioIndex)
       .post('/usuarios', usuarioCreate)
+      .delete('/usuarios/:id', usuarioDelete)
 
 
 

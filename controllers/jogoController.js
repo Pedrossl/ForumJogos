@@ -15,7 +15,12 @@ export const jogoIndex = async (req, res) => {
 
 export const jogoCreate = async (req, res) => { 
     const { nome, genero, preco} = req.body;
+
+    console.log("Nivel: " + req.user_logado_nivel)
+
     
+    if(req.user_logado_nivel > 3){
+
     if (!nome || !genero || !preco ) {
         res.status(400).json({ id: 0, msg: "Erro... Informe os dados" })
         return
@@ -27,10 +32,16 @@ export const jogoCreate = async (req, res) => {
     } catch (error) {
         res.status(400).json({ id: 0, msg: "Erro... Não foi possível inserir o jogo" })
     }
+    }else{
+        res.status(400).json({ id: 0, msg: "Erro... Você não tem permissão para criar jogos" })
+    }
  }
 
  export const jogoDelete = async (req, res) => {
     const id = req.params.id;
+    
+    if(req.user_logado_nivel > 3){
+    
     if (!id) {
         res.status(400).json({ id: 0, msg: "Erro... Informe o id" })
         return
@@ -46,4 +57,7 @@ export const jogoCreate = async (req, res) => {
     } catch (error) {
         res.status(400).json({ id: 0, msg: "Erro... Não foi possível deletar o jogo" })
     }
+  } else {
+    res.status(400).json({ id: 0, msg: "Erro... Você não tem permissão para deletar jogos" })
   }
+ }

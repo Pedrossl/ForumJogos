@@ -1,4 +1,3 @@
-import e from 'cors';
 import { sequelize } from '../databases/conecta.js'
 import { Usuario } from '../models/Usuario.js'
 
@@ -70,9 +69,35 @@ export const usuarioIndex = async (req, res) => {
   } 
 
     try {
+      const emailExiste = await Usuario.findOne({email})
+      
+      if (emailExiste) {
+        res.status(400).json({ id: 0, msg: "Erro... Email já cadastrado" })
+        return
+       }
+
         const usuario = await Usuario.create({ nome, email, user, senha, nivel });
         res.status(200).json(usuario);
     } catch (error) {
         res.status(400).json({ id: 0, msg: "Erro... Não foi possível inserir o usuario" })
     }
   }
+
+  export const usuarioDelete = async (req, res) => { 
+    const id = req.params.id;
+    if (!id) {
+        res.status(400).json({ id: 0, msg: "Erro... Informe o id" })
+        return
+    }
+
+    try {
+        const usuario = await Usuario.destroy({  
+            where: {
+                id: id
+            }
+        });
+        res.status(200).json(usuario);
+    } catch (error) {
+        res.status(400).json({ id: 0, msg: "Erro... Não foi possível deletar o usuario" })
+    }
+   }

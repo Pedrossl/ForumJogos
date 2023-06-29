@@ -17,11 +17,13 @@ services:
       - reidecio_rede
 
   api:
-    build: /home/Reidecio  
+    build:
+      context: ./
+      dockerfile: Dockerfile 
     restart: always
     container_name: api_app
     ports:
-      - 3000:3000 
+      - 3001:3001 
     depends_on:
       - db 
     networks:

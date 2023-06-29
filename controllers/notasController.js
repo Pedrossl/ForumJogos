@@ -73,3 +73,4 @@ export const notasDelete = async (req, res) => {
     res.status(400).json({ id: 0, msg: "Erro... Você não tem permissão para deletar essa nota" })
  }
 }
+

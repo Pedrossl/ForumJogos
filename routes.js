@@ -4,6 +4,7 @@ import { notasCreate, notasDelete, notasIndex } from "./controllers/notasControl
 import { usuarioCreate, usuarioDelete, usuarioIndex } from "./controllers/usuarioController.js"
 import { loginUsuario } from "./controllers/loginController.js"
 import { verificaLogin } from "./middleware/verificaLogin.js"
+import { nivelCreate } from "./controllers/nivelController.js"
 
 
 
@@ -22,6 +23,9 @@ router.get('/notas', notasIndex)
 router.get('/usuarios',usuarioIndex)
       .post('/usuarios', usuarioCreate)
       .delete('/usuarios/:id', usuarioDelete)
+
+// Nivel
+router.post('/nivel',nivelCreate)
 
 
 

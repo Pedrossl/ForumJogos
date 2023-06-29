@@ -31,7 +31,16 @@ export const Usuario = sequelize.define('usuario', {
   nivel: {
     type: DataTypes.INTEGER(1),
     allowNull: false
+  },  
+  tentativasLogin: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
   }
+}, {
+  // Definir os campos visíveis/invisíveis
+  defaultScope: {
+    attributes: { exclude: ['tentativaLogin'] }
+  },
 },
 {
   paranoid: true

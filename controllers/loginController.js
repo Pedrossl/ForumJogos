@@ -9,14 +9,14 @@ dotenv.config();
 
 import { Usuario } from '../models/Usuario.js';
 
-const transporter = nodemailer.createTransport({
+/*const transporter = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {
       user: "b827fd5419812d",
       pass: "********dc6e"
     }
-  });
+  });*/
 
   
 
@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
     const { user, senha } = req.body;
     const usuario = await Usuario.findOne({ where: { user } });
   
-    const enviarEmailTentativasExcedidas = (email) => {
+    /*const enviarEmailTentativasExcedidas = (email) => {
       const mailOptions = {
         from: `"Sr(a) ${user} 👻 esta tendo muitas tentativas incorretas de login com seu usuario em nosso sistema"`,
         to: email,
@@ -39,7 +39,7 @@ const transporter = nodemailer.createTransport({
           console.log("Email enviado: " + info.response);
         }
       });
-    };
+    };*/
   
     if (!usuario || !bcrypt.compareSync(senha, usuario.senha)) {
       usuario.tentativasLogin = usuario.tentativasLogin + 1;

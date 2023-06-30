@@ -5,7 +5,7 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: YES
       MYSQL_DATABASE: trab_final
       MYSQL_USER: lobatoSQL
       MYSQL_PASSWORD: 1234

@@ -11,7 +11,6 @@ export const verificaLogin = (req, res, next) => {
         req.user_logado_id = decode.id
         req.user_logado_nome = decode.nome
         req.user_logado_nivel = decode.nivel
-        req.user_tenativa_login = decode.tentativaLogin
         next();
 
      } catch(erro){

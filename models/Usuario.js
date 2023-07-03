@@ -31,28 +31,18 @@ export const Usuario = sequelize.define('usuario', {
   nivel: {
     type: DataTypes.INTEGER(1),
     allowNull: false
-  },  
-  tentativasLogin: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
   }
 }, {
-  // Definir os campos visíveis/invisíveis
-  defaultScope: {
-    attributes: { exclude: ['tentativaLogin'] }
-  },
-},
-{
-  paranoid: true
-},
-  {
-    timestamps: false
+  timestamps: false
 });
+
 
 Usuario.beforeCreate(usuario => {
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(usuario.senha, salt)
   usuario.senha = hash  
 });
+
+//Usuario.belongsTo(Nivel, { foreignKey: 'nivel', targetKey: 'id' });
 
 Nivel.hasMany(Usuario, { foreignKey: 'nivel', sourceKey: 'id' });

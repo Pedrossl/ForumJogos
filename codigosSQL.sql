@@ -26,8 +26,10 @@ BEGIN
       SET avaFinalValue = 'Regular';
     ELSEIF notaTotal <= 4 AND notaTotal > 5 THEN
       SET avaFinalValue = 'Bom';
-    ELSEIF notaTotal <= 5 THEN
+    ELSEIF notaTotal = 5 THEN
       SET avaFinalValue = 'Ótimo';
+    ELSE
+      SET avaFinalValue = 'Recomendado';
     END IF;
 
     UPDATE jogos

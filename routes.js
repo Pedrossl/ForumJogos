@@ -18,8 +18,8 @@ router.get('/jogos', jogoIndex)
       .delete('/jogos/:id',verificaLogin,jogoDelete)
 // Notas
 router.get('/notas', notasIndex)
-      .put('/notas',verificaLogin,notasCreate)
-      .delete('/notas/:id',notasDelete)
+      .post('/notas',verificaLogin,notasCreate)
+      .delete('/notas/:id',verificaLogin,notasDelete)
 
 // Usuarios
 router.get('/usuarios',usuarioIndex)

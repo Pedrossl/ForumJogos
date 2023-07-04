@@ -34,7 +34,6 @@ export const notasCreate = async (req, res) => {
         await Jogos.increment('notaTotal', { by: notacao.nota, where: { id: jogo_id }, transaction: t});  
         
         await Jogos.increment('numeroVotos', { by: 1, where: { id: jogo_id }, transaction: t });
-
         await t.commit();
 
         res.status(200).json(notacao);
@@ -45,6 +44,7 @@ export const notasCreate = async (req, res) => {
     
     }
 }
+
 
 export const notasDelete = async (req, res) => {
     const id = req.params.id;

@@ -90,7 +90,6 @@ export const jogoDelete = async (req, res) => {
             where: {
                 id: id
             },
-            individualHooks: true
         });
 
         await Log.create({

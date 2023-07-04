@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import md5 from "md5";
+import bcrypt from "bcrypt";
 
 import { Usuario } from "../models/Usuario.js";
   
@@ -23,7 +24,6 @@ let transporter = nodemailer.createTransport({
 	let mensa = "<h5>Nosso forum</h5>"
 	mensa += `<h6>Usuario: ${name} </h6>`
 	mensa += "<h6>Você solicitou a troca de senha. Sua chave é: " + valorAleatorio + "</h6>"
-	mensa += "Clique no link abaixo para alterar: </h6>"
 
   let info = await transporter.sendMail({
     from: '"From Notas Brasil" <NotasBrasil@ritogames.com>',
@@ -54,7 +54,7 @@ export const enviarEmail = async (req, res) => {
 	  }
 
 	  const hash = md5(usuario.name + email + Date.now())
-	  conteudoEmail(usuario.name, email, hash);
+	  await conteudoEmail(usuario.name, email, hash);
 
 	  res.status(200).json({ msg: "ok. Email para alteração enviado com sucesso!" })
 	  console.log(valorAleatorio);
@@ -89,9 +89,12 @@ export const alterarSenha = async (req, res) => {
 		res.status(400).json({ erro: "Erro... Número incorreto" });
 		return;
 	  }
-  
-	  usuario.senha = novaSenha;
+	  const hashedSenha = await bcrypt.hash(novaSenha, 10);
+	  usuario.senha = hashedSenha;
 	  usuario.save();
+
+	  //usuario.senha = novaSenha;
+	  //usuario.save();
   
 	  res.status(200).json({ msg: "ok. Senha alterada com sucesso!" });
 	} catch (error) {
